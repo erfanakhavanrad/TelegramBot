@@ -11,7 +11,7 @@ import java.sql.*;
  */
 public class Main {
     public static void main(String[] args) {
-        String url, user, password, sql;
+        String url, user, password, sql, selectAllQuery;
         int number = 42;
         url = "jdbc:sqlserver://localhost;databaseName=Telegram" + ";encrypt=true;trustServerCertificate=true";
         user = "tiny";
@@ -28,13 +28,28 @@ public class Main {
 //            int rows = statement.executeUpdate(sql);
 
             // Second method
-            sql = "INSERT INTO users (userName, number) VALUES (?,?)";
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, "Idiot");
-            preparedStatement.setInt(2, 66);
-            int rows = preparedStatement.executeUpdate();
+//            sql = "INSERT INTO users (userName, number) VALUES (?,?)";
+//            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+//            preparedStatement.setString(1, "Idiot");
+//            preparedStatement.setInt(2, 66);
+//            int rows = preparedStatement.executeUpdate();
 
-            if (rows > 0) System.out.println("1 Row effected.");
+//            if (rows > 0) System.out.println("1 Row effected.");
+
+
+            selectAllQuery = "SELECT * FROM USERS";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(selectAllQuery);
+            int count = 0;
+            while (resultSet.next()) {
+                count++;
+                String name = resultSet.getString("userName");
+                int number2 = resultSet.getInt("number");
+                System.out.printf("user %d: %s - %d\n", count, name, number2);
+
+            }
+
+
             connection.close();
 
         } catch (SQLException e) {
