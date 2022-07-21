@@ -15,6 +15,7 @@ public class PollingBot extends TelegramLongPollingBot {
         System.out.println(update.getMessage().getText());
         System.out.println(update.getMessage().getFrom().getFirstName());
 
+        System.out.println(update.getChatMember());
         String command = update.getMessage().getText();
         if (command.equals("/run")) {
             String message = "Keep Moving forward till you eviscerate your enemies!";
